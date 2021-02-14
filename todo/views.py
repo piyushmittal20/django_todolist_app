@@ -5,10 +5,16 @@ from .models import Task
 # Create your views here.
 
 def index(request):
-    tasks = Task.objects.all()
+    orderbyList = ['-is_urgent','-id']
+    tasks = Task.objects.all().order_by(*orderbyList)
     if request.method == 'POST':
         task = request.POST.get('text', '')
-        task = Task(task_name=task)
+        urge = request.POST.get('is_urge','')
+        if urge == 'on':
+            urge = True
+        else:
+            urge = False
+        task = Task(task_name=task,is_urgent=urge)
         task.save()
         return redirect('/')
     return render(request, 'index.html', {'tasks': tasks})

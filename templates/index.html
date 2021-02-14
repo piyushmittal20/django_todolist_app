@@ -41,6 +41,7 @@
             padding: 13px;
             font-family: 'Fira Sans', sans-serif;
             font-size: 20px;
+            background-color: paleturquoise;
         }
         .form-control {
             padding: 12px;
@@ -84,6 +85,10 @@
                         <div class="form-group">
                             <textarea class="form-control" name="text" placeholder="ADD YOUR TASK!!" id="exampleFormControlTextarea1" rows="1"></textarea>
                         </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="vehicle1" name="is_urge">
+                            <label for="vehicle1">Check if it's urgent work?</label><br>
+                        </div>
                     </div>
                     <div class="col-md-2">
                         <button type="submit" class="btn">ADD TASK</button>
@@ -94,7 +99,13 @@
                 {% for task in tasks %}
                 <div class="card my-3">
                     <div class="card-body">
-                        {{task.task_name}}
+                        
+                        {% if task.is_urgent %}
+                            {{task.task_name}} <span style="color: indianred;font-size: 14px; ">(urgent)</span>
+                        {%else%}
+                            {{task.task_name}}
+                        {%endif%}
+
                         <span><a class="delete" href="delete/{{task.id}}"><i class="far fa-times-circle"></i></a></span>
                     </div>
                 </div>
